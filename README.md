@@ -23,3 +23,6 @@ create a app : `python manage.py startapp equines`
 
 create file `equines/urls.py` file and add coresponding code according to tutorial in `equines/urls.py` and `galoppolag/urls.py`, start server and check `http://127.0.0.1:8000/equines/`
 
+
+some INSTALLED_APPS from galoppolag/settings.py need database access with tables created so we run `python manage.py migrate`to create them.
+
