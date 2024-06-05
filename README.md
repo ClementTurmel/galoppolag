@@ -37,3 +37,22 @@ I run the command `python manage.py sqlmigrate equines 0001` and it show SQL ins
 command `python manage.py check` check project conformity without applying migration or modifying database.
 
 To create tables  `Equine` and `Person` in database, I run `python manage.py migrate` and it `return Applying equines.0001_initial... OK`. tables are now visible (using DBeaver for example)
+
+creating data through shell :
+execute command `python manage.py shell` and then :
+```
+>>> from equines.models import Equine, Person
+>>> Person.objects.all()
+<QuerySet []>
+>>> p = Person(first_name="Clément", last_name="Turmel", email="a@b.c", phone="0123456789")
+>>> p.save()
+>>> p.id
+1
+>>> Person.objects.all()
+<QuerySet [<Person: Person object (1)>]>
+>>> p.first_name 
+'Clément'
+>>> p.email = "d@e.f"
+>>> p.save()
+```
+
