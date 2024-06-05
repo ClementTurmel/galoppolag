@@ -17,3 +17,9 @@ tutorial : https://docs.djangoproject.com/en/5.0/intro/tutorial01/
 
 create django project : `django-admin startproject galoppolag`
 
+move to project dir and start server : `python manage.py runserver` (ignoring unapplied migrations for now) and check `127.0.0.1:8000`
+
+create a app : `python manage.py startapp equines`
+
+create file `equines/urls.py` file and add coresponding code according to tutorial in `equines/urls.py` and `galoppolag/urls.py`, start server and check `http://127.0.0.1:8000/equines/`
+
