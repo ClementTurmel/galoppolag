@@ -56,3 +56,6 @@ execute command `python manage.py shell` and then :
 >>> p.save()
 ```
 
+I also trying to use same operation using test, see  `test_person.py` (run test using command `python manage.py test`)
+with default sqlite database, for test, a in-memory database is used, data are hermetic between test and memory database is destroyed after test execution.
+
