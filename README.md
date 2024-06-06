@@ -56,6 +56,11 @@ execute command `python manage.py shell` and then :
 >>> p.save()
 ```
 
-I also trying to use same operation using test, see  `test_person.py` (run test using command `python manage.py test`)
+I also try to use same operation using test, see [commit test_person.py](https://github.com/ClementTurmel/galoppolag/commit/ed5d7f653867bd13549da999c6f9530b6c523c95#diff-e951cc5abe15ddb4612556321cd5170908a0c2962a54c1ad86175b953657f1d5) (run test using command `python manage.py test`)
 with default sqlite database, for test, a in-memory database is used, data are hermetic between test and memory database is destroyed after test execution.
+
+Next I explore filter (see `test_equine.py`), I see that I can't save a `equine` object if the attribute `owner` of it (a `Person` object) is not saved before.
+
+I also noticed that 'models.ForeignKey' type of attribute owner make the attribute mandatory for saving.
+We saw it before, doing the command `python manage.py sqlmigrate equines 0001` that colunm "owner_id" was NOT NULL. (TODO explore if a 'models.ForeignKey' can be nullable)
 
