@@ -25,3 +25,22 @@ class EquineTestCase(TestCase):
             equine.save()
         except Exception as e:
             assert str(e) == "NOT NULL constraint failed: equines_equine.owner_id"
+
+
+    def test_a_person_can_have_multiple_equines(self):
+        person = Person(first_name="John", last_name="Doe", email="a@b.c", phone="0123456789")
+        person.save()
+        
+        person.equine_set.create(name="Ponyta", birthdate="2015-01-01") #create function is a shortcut to create and save an object
+        person.equine_set.create(name="Rapidash", birthdate="2010-01-01")
+
+        zebstrika = person.equine_set.create(name="Zebstrika", birthdate="2012-01-01")
+
+        assert zebstrika.owner.first_name == "John"
+
+        equines_from_db = Equine.objects.all()
+
+        assert len(equines_from_db) == 3
+        assert equines_from_db[0].name == "Ponyta"
+        assert equines_from_db[1].name == "Rapidash"
+        assert equines_from_db[2].name == "Zebstrika"

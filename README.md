@@ -64,3 +64,5 @@ Next I explore filter (see `test_equine.py`), I see that I can't save a `equine`
 I also noticed that 'models.ForeignKey' type of attribute owner make the attribute mandatory for saving.
 We saw it before, doing the command `python manage.py sqlmigrate equines 0001` that colunm "owner_id" was NOT NULL. (TODO explore if a 'models.ForeignKey' can be nullable)
 
+[part 2: administration](https://docs.djangoproject.com/fr/5.0/intro/tutorial02/#creating-an-admin-user)
+
