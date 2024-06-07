@@ -66,3 +66,4 @@ We saw it before, doing the command `python manage.py sqlmigrate equines 0001` t
 
 [part 2: administration](https://docs.djangoproject.com/fr/5.0/intro/tutorial02/#creating-an-admin-user)
 
+I create a admin user, and register Equine and Person classes from model in admin.py to be able to add/edit/remove them in the django admin page `http://127.0.0.1:8000/admin/ `

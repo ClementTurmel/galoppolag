@@ -18,3 +18,5 @@ class Equine(models.Model):
     birthdate = models.DateField("Date of birth")
 
 
+    def __str__(self) -> str:
+        return f"{self.name}, {self.birthdate.year}, appartenant à {self.owner.first_name} {self.owner.last_name}"
