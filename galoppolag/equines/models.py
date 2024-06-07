@@ -8,6 +8,7 @@ class Person(models.Model):
     last_name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=15)
+    birthday = models.DateField("Date of birth")
 
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name} {self.email} {self.phone}"
