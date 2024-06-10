@@ -5,7 +5,7 @@ from equines.models import Equine, Person
 class EquineTestCase(TestCase):
 
     def test_retrieving_equine_using_filter(self):
-        person = Person(first_name="John", last_name="Doe", email="a@b.c", phone="0123456789")
+        person = Person(first_name="John", last_name="Doe", email="a@b.c", phone="0123456789", birthday="1990-01-01")
         person.save() # person must be saved before equine can be saved 
         equine = Equine(owner=person, name="Ponyta", birthdate="2010-01-01")
 
@@ -28,13 +28,13 @@ class EquineTestCase(TestCase):
 
 
     def test_a_person_can_have_multiple_equines(self):
-        person = Person(first_name="John", last_name="Doe", email="a@b.c", phone="0123456789")
+        person = Person(first_name="John", last_name="Doe", email="a@b.c", phone="0123456789", birthday="1990-01-01")
         person.save()
         
-        person.equine_set.create(name="Ponyta", birthdate="2015-01-01") #create function is a shortcut to create and save an object
-        person.equine_set.create(name="Rapidash", birthdate="2010-01-01")
+        person.owned_horses.create(name="Ponyta", birthdate="2015-01-01") #create function is a shortcut to create and save an object
+        person.owned_horses.create(name="Rapidash", birthdate="2010-01-01")
 
-        zebstrika = person.equine_set.create(name="Zebstrika", birthdate="2012-01-01")
+        zebstrika = person.owned_horses.create(name="Zebstrika", birthdate="2012-01-01")
 
         assert zebstrika.owner.first_name == "John"
 
