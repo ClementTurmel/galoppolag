@@ -92,3 +92,6 @@ then python manage.py check
 
 and then python manage.py migrate
 
+##### [part 3: views and templates](https://docs.djangoproject.com/fr/5.0/intro/tutorial03/)
+
+I create template index.html to see owners and link them to owner.hmtl to see details (see commit [f51679](https://github.com/ClementTurmel/galoppolag/commit/f51679a13122fa70fb486088c6c421a5a9891a64) and [130720](https://github.com/ClementTurmel/galoppolag/commit/1307209c3615d17e943800274aceb1acc42a0924))
