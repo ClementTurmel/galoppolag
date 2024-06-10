@@ -1,0 +1,9 @@
+{% if oldest_persons %}
+    <ul>
+    {% for person in oldest_persons %}
+        <li><a href="{% url 'owner_detail' person.id %}">{{ person.first_name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No person available.</p>
+{% endif %}
