@@ -13,6 +13,7 @@ def test_import_persons():
     persons = [
         {"first_name": "John", "last_name": "Smith", "email": "john.smith@example.com", "phone": "0123456789", "birthday": "1990-01-01"},
         {"first_name": "Jane", "last_name": "Johnson", "email": "jane.johnson@example.com", "phone": "0123456790", "birthday": "1991-02-02"},
+        {"first_name": "Clément", "last_name": "Turmel", "email": "a@b.cd", "phone": "0123456789", "birthday": "1990-01-01", "picture_url": "https://lh3.googleusercontent.com/pw/AP1GczPf4COkluuJyEs_HtJNKbFLl4ASybQTHzMOyO198BMb3Cthy-9r4t8t7U_JXWYpAG6jx-w1GY0hW-7Ro1j8wMXP9BCYPRBcoeSoYfD2kDgUExccgPCBakr5-p3MRvMksY8QbB8IlZIS2SHJC70wq1rUlw=w878-h879-s-no?authuser=0"},
         {"first_name": "Jack", "last_name": "Williams", "email": "jack.williams@example.com", "phone": "0123456791", "birthday": "1992-03-03"},
         {"first_name": "James", "last_name": "Brown", "email": "james.brown@example.com", "phone": "0123456792", "birthday": "1993-04-04"},
         {"first_name": "Julia", "last_name": "Jones", "email": "julia.jones@example.com", "phone": "0123456793", "birthday": "1994-05-05"},
@@ -40,7 +41,12 @@ def test_import_persons():
     owner = Person.objects.first()
 
     equines = [
-        {"name": "Eclair", "birthdate": "2010-01-01", "owner": owner},
+        {
+            "name": "Eclair", 
+            "birthdate": "2010-01-01", 
+            "owner": Person.objects.get(first_name="Clément"), 
+            "picture_url": "https://live.staticflickr.com/4517/38874599871_19d32aa58e_q.jpg"
+        },
         {"name": "Tonnerre", "birthdate": "2011-02-02", "owner": owner},
         {"name": "Galopin", "birthdate": "2012-03-03", "owner": owner},
         {"name": "Foudre", "birthdate": "2013-04-04", "owner": owner},
