@@ -13,6 +13,13 @@ class Person(models.Model):
 
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name} {self.email} {self.phone}"
+    
+    def get_owned_horses_names(self) -> str:
+        horses = self.owned_horses.all()
+        if len(horses) > 1:
+            return ", ".join([equine.name for equine in horses[:len(horses)-1]]) + " et " + horses[len(horses)-1].name
+        else:
+            return horses[0].name
 
 class Equine(models.Model):
     owner = models.ForeignKey(Person, on_delete=models.CASCADE, related_name="owned_horses")

@@ -1,6 +1,11 @@
 # galoppolag
 A project to experiment Django python framework
 
+python manage.py test
+python manage.py runserver
+python manage.py check
+python manage.py migrate
+python manage.py sqlmigrate equines 0001
 
 ## requirement
 * python
@@ -30,7 +35,8 @@ create file `equines/urls.py` file and add coresponding code according to tutori
 
 some INSTALLED_APPS from galoppolag/settings.py need database access with tables created so we run `python manage.py migrate`to create them.
 
-I create `Equine` and `Person` class in `equines/models.py` and run `python manage.py makemigrations equines`. 
+I create `Equine` and `Person` class in `equines/models.py` 
+and run `python manage.py makemigrations equines`. 
 this command has produce a `0001_initial.py` file with information about our models (the creation of them in this case).
 
 I run the command `python manage.py sqlmigrate equines 0001` and it show SQL instruction creating tables Person and Equine.

@@ -19,10 +19,7 @@
                     </div>
                     <div class="d-flex align-items-center">
                         {% if person.owned_horses.all %}
-                            propriétaire de 
-                            {% for horse in person.owned_horses.all %}
-                                {{ horse.name }} 
-                            {% endfor %}
+                            propriétaire de {{ person.get_owned_horses_names }}
                             {% for horse in person.owned_horses.all %}
                                 {% if horse.picture_url %}
                                     <img src="{{ horse.picture_url }}" alt="{{ horse.name }}" class="rounded-circle ms-2" style="width: 40px; height: 40px;">
