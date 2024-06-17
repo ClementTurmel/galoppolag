@@ -1,11 +1,16 @@
 # galoppolag
 A project to experiment Django python framework
 
-python manage.py test
-python manage.py runserver
-python manage.py check
-python manage.py migrate
-python manage.py sqlmigrate equines 0001
+## used commands
+#### Django commands
+`python manage.py test`
+`python manage.py runserver`
+`python manage.py check`
+`python manage.py makemigrations equines`
+`python manage.py migrate`
+#### Other commands :
+from galoppolag\galoppolag folder, to import data in database :
+`pytest test_data.py`
 
 ## requirement
 * python
@@ -101,3 +106,5 @@ and then python manage.py migrate
 ##### [part 3: views and templates](https://docs.djangoproject.com/fr/5.0/intro/tutorial03/)
 
 I create template index.html to see owners and link them to owner.hmtl to see details (see commit [f51679](https://github.com/ClementTurmel/galoppolag/commit/f51679a13122fa70fb486088c6c421a5a9891a64) and [130720](https://github.com/ClementTurmel/galoppolag/commit/1307209c3615d17e943800274aceb1acc42a0924))
+
+I start adding a way to see lessons, so I add `Lesson`, `Instructor` and `Couple` represented by a `Equine` and a `Person`

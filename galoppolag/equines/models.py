@@ -1,7 +1,5 @@
 from django.db import models
 
-# Create your models here.
-
 
 class Person(models.Model):
     first_name = models.CharField(max_length=100)
@@ -21,6 +19,11 @@ class Person(models.Model):
         else:
             return horses[0].name
 
+
+class Instructor(Person):
+    pass
+
+
 class Equine(models.Model):
     owner = models.ForeignKey(Person, on_delete=models.CASCADE, related_name="owned_horses")
     name = models.CharField(max_length=100)
@@ -30,3 +33,14 @@ class Equine(models.Model):
 
     def __str__(self) -> str:
         return f"{self.name}, {self.birthdate.year}, appartenant à {self.owner.first_name} {self.owner.last_name}"
+    
+
+class Lesson(models.Model):
+    instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE, related_name="lessons")
+    datetime = models.DateTimeField()
+
+
+class Couple(models.Model):
+    Person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    Equine = models.ForeignKey(Equine, on_delete=models.SET_NULL, null=True, blank=True)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name="couples")
