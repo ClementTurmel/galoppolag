@@ -23,6 +23,9 @@ class Person(models.Model):
 class Instructor(Person):
     pass
 
+class Rider(Person):
+    pass
+
 
 class Equine(models.Model):
     owner = models.ForeignKey(Person, on_delete=models.CASCADE, related_name="owned_horses")
@@ -41,6 +44,6 @@ class Lesson(models.Model):
 
 
 class Couple(models.Model):
-    Person = models.ForeignKey(Person, on_delete=models.CASCADE)
-    Equine = models.ForeignKey(Equine, on_delete=models.SET_NULL, null=True, blank=True)
+    rider = models.ForeignKey(Rider, on_delete=models.CASCADE)
+    equine = models.ForeignKey(Equine, on_delete=models.SET_NULL, null=True, blank=True)
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name="couples")
