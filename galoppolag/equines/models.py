@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 
 class Person(models.Model):
@@ -47,3 +48,10 @@ class Couple(models.Model):
     rider = models.ForeignKey(Rider, on_delete=models.CASCADE)
     equine = models.ForeignKey(Equine, on_delete=models.SET_NULL, null=True, blank=True)
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name="couples")
+
+
+    def save(self, *args, **kwargs):
+        lesson_riders = [couple.rider for couple in self.lesson.couples.all()]
+        if self.rider in lesson_riders :
+            raise ValidationError(f"Rider {self.rider.first_name} {self.rider.last_name} is already in this lesson")
+        super().save(*args, **kwargs)

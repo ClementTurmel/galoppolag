@@ -3,11 +3,15 @@ A project to experiment Django python framework
 
 ## used commands
 #### Django commands
-`python manage.py test`
-`python manage.py runserver`
-`python manage.py check`
-`python manage.py makemigrations equines`
-`python manage.py migrate`
+```
+python manage.py test
+python manage.py test folder.file_name.class_name.test_name
+python manage.py test equines.test_lesson_and_couple.LessonCoupleTestCase.test_a_lesson_cant_have_multiple_couple_with_same_equine
+python manage.py runserver
+python manage.py check
+python manage.py makemigrations equines
+python manage.py migrate
+```
 #### Other commands :
 from galoppolag\galoppolag folder, to import data in database :
 `pytest test_data.py`
