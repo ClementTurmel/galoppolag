@@ -1,8 +1,10 @@
 from django.test import TestCase
 from equines.models import Person, Equine, Lesson, Couple, Instructor, Rider
 from django.core.exceptions import ValidationError
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
-
+TEST_DATETIME = datetime.now(ZoneInfo("Europe/Paris"))
 
 class LessonCoupleTestCase(TestCase):
 
@@ -12,7 +14,7 @@ class LessonCoupleTestCase(TestCase):
             last_name="Doe", 
             email="a@b.c", 
             phone="0123456789", 
-            birthday="1990-01-01"
+            birthday=datetime.now()
         )
         
         Instructor.objects.create(
@@ -20,20 +22,20 @@ class LessonCoupleTestCase(TestCase):
             last_name="Doe", 
             email="a@b.c", 
             phone="0123456789", 
-            birthday="1990-01-01"
+            birthday=datetime.now()
         )
 
 
         Equine.objects.create(
             name="Eclair", 
-            birthdate="2010-01-01", 
+            birthdate=datetime.now(), 
             owner=Person.objects.first()
         )
     
     
     def test_couple_is_a_rider_and_a_equine_associated_to_a_lesson(self):
         instructor = Instructor.objects.first()
-        lesson = Lesson.objects.create(instructor=instructor, datetime="2021-01-01 14:00")
+        lesson = Lesson.objects.create(instructor=instructor, datetime=TEST_DATETIME)
 
         assert len(Couple.objects.all()) == 0
 
@@ -52,16 +54,16 @@ class LessonCoupleTestCase(TestCase):
     def test_lesson_are_represented_by_a_instructor_and_a_list_of_couple(self):
         instructor = Instructor.objects.first()
 
-        Lesson.objects.create(instructor=instructor, datetime="2021-01-01 14:00")
+        Lesson.objects.create(instructor=instructor, datetime=TEST_DATETIME)
 
         assert len(Lesson.objects.all()) == 1
 
-        lesson_from_db = Lesson.objects.get(datetime="2021-01-01 14:00")
+        lesson_from_db = Lesson.objects.get(datetime=TEST_DATETIME)
         assert lesson_from_db.instructor == instructor
 
     def test_a_lesson_cant_have_multiple_couple_with_same_rider(self):
         instructor = Instructor.objects.first()
-        lesson = Lesson.objects.create(instructor=instructor, datetime="2021-01-01 14:00")
+        lesson = Lesson.objects.create(instructor=instructor, datetime=TEST_DATETIME)
         rider = Rider.objects.first()
         equine = Equine.objects.first()
 
