@@ -27,6 +27,13 @@ class Instructor(Person):
 class Rider(Person):
     pass
 
+    @classmethod
+    def from_person(cls, person, **extra_fields):
+        rider = cls(person_ptr=person, **extra_fields)
+        rider.__dict__.update(person.__dict__)
+        rider.save()
+        return rider
+
 
 class Equine(models.Model):
     owner = models.ForeignKey(Person, on_delete=models.CASCADE, related_name="owned_horses")

@@ -3,13 +3,44 @@ import os, sys
 os.environ['DJANGO_SETTINGS_MODULE'] = 'galoppolag.settings'
 import django
 django.setup()
-from equines.models import Equine, Person
+from equines.models import Equine, Person, Rider
 
 
 def test_import_persons():
 
     Person.objects.all().delete()
 
+    create_persons()
+
+    create_equines_with_owner()
+
+    create_riders()
+
+
+
+def create_riders():
+    Rider.from_person(Person.objects.get(first_name="Clément"))
+
+def create_equines_with_owner():
+    owner = Person.objects.first()
+
+    equines = [
+        {
+            "name": "Eclair", 
+            "birthdate": "2010-01-01", 
+            "owner": Person.objects.get(first_name="Clément"), 
+            "picture_url": "https://live.staticflickr.com/4517/38874599871_19d32aa58e_q.jpg"
+        },
+        {"name": "Tonnerre", "birthdate": "2011-02-02", "owner": owner},
+        {"name": "Galopin", "birthdate": "2012-03-03", "owner": owner},
+        {"name": "Foudre", "birthdate": "2013-04-04", "owner": owner},
+        {"name": "Bolt", "birthdate": "2014-05-05", "owner": owner},
+    ]
+
+    for equine in equines:
+        Equine.objects.create(**equine)
+
+def create_persons():
     persons = [
         {"first_name": "John", "last_name": "Smith", "email": "john.smith@example.com", "phone": "0123456789", "birthday": "1990-01-01"},
         {"first_name": "Jane", "last_name": "Johnson", "email": "jane.johnson@example.com", "phone": "0123456790", "birthday": "1991-02-02"},
@@ -36,22 +67,3 @@ def test_import_persons():
 
     for person in persons:
         Person.objects.create(**person)
-
-    # Assurez-vous d'avoir une instance de Person à qui attribuer les chevaux
-    owner = Person.objects.first()
-
-    equines = [
-        {
-            "name": "Eclair", 
-            "birthdate": "2010-01-01", 
-            "owner": Person.objects.get(first_name="Clément"), 
-            "picture_url": "https://live.staticflickr.com/4517/38874599871_19d32aa58e_q.jpg"
-        },
-        {"name": "Tonnerre", "birthdate": "2011-02-02", "owner": owner},
-        {"name": "Galopin", "birthdate": "2012-03-03", "owner": owner},
-        {"name": "Foudre", "birthdate": "2013-04-04", "owner": owner},
-        {"name": "Bolt", "birthdate": "2014-05-05", "owner": owner},
-    ]
-
-    for equine in equines:
-        Equine.objects.create(**equine)
