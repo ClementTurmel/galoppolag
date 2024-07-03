@@ -1,10 +1,16 @@
+### DJANGO INITIALIZATION ###
 import os, sys
 #sys.path.append('C:\DEV\galoppolag\galoppolag')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'galoppolag.settings'
 import django
 django.setup()
-from equines.models import Equine, Person, Rider
+#############################
+from datetime import datetime
+from zoneinfo import ZoneInfo
+from equines.models import Equine, Person, Rider, Lesson, Instructor
 
+
+TEST_DATETIME = datetime.now(ZoneInfo("Europe/Paris"))
 
 def test_import_persons():
 
@@ -16,10 +22,25 @@ def test_import_persons():
 
     create_riders()
 
+    create_instructors()
+
+    create_lessons()
+
+
+
+
+def create_lessons():
+    Lesson.objects.create(instructor=Instructor.objects.first(), datetime=TEST_DATETIME)
+
+
+def create_instructors():
+    Instructor.objects.create(first_name="Maria", last_name="Goode", birthday="1980-01-01")
 
 
 def create_riders():
-    Rider.from_person(Person.objects.get(first_name="Clément"))
+    for person in Person.objects.all()[:5]:
+        Rider.from_person(Person.objects.get(first_name=person.first_name))
+
 
 def create_equines_with_owner():
     owner = Person.objects.first()
@@ -39,6 +60,7 @@ def create_equines_with_owner():
 
     for equine in equines:
         Equine.objects.create(**equine)
+
 
 def create_persons():
     persons = [

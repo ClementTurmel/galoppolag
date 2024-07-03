@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-
+from django.utils import formats
 
 class Person(models.Model):
     first_name = models.CharField(max_length=100)
@@ -55,6 +55,12 @@ class Couple(models.Model):
     rider = models.ForeignKey(Rider, on_delete=models.CASCADE)
     equine = models.ForeignKey(Equine, on_delete=models.SET_NULL, null=True, blank=True)
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name="couples")
+
+    def __str__(self) -> str:
+        return f"{self.rider.first_name} {self.rider.last_name} " \
+            f"et {self.equine.name} "\
+            f"dans le cours du {formats.date_format(self.lesson.datetime, "l d F à H:i")} "\
+            f"avec {self.lesson.instructor.first_name} {self.lesson.instructor.last_name}"
 
 
     def save(self, *args, **kwargs):
