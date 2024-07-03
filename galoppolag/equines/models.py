@@ -63,8 +63,11 @@ class Couple(models.Model):
             f"avec {self.lesson.instructor.first_name} {self.lesson.instructor.last_name}"
 
 
-    def save(self, *args, **kwargs):
+    def clean(self):
         lesson_riders = [couple.rider for couple in self.lesson.couples.all()]
-        if self.rider in lesson_riders :
+        if self.rider in lesson_riders:
             raise ValidationError(f"Rider {self.rider.first_name} {self.rider.last_name} is already in this lesson")
+
+    def save(self, *args, **kwargs):
+        self.clean()
         super().save(*args, **kwargs)

@@ -73,3 +73,5 @@ class LessonCoupleTestCase(TestCase):
             Couple.objects.create(rider=rider, equine=equine, lesson=lesson)
         
         self.assertEqual(e.exception.message, f"Rider {rider.first_name} {rider.last_name} is already in this lesson")
+
+        self.assertEqual(len(Couple.objects.all()), 1)
