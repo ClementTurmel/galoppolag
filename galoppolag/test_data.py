@@ -52,7 +52,7 @@ def create_instructors():
 
 
 def create_riders():
-    for person in Person.objects.all()[:5]:
+    for person in Person.objects.all()[:10]:
         Rider.from_person(Person.objects.get(first_name=person.first_name))
 
 
