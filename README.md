@@ -112,3 +112,10 @@ and then python manage.py migrate
 I create template index.html to see owners and link them to owner.hmtl to see details (see commit [f51679](https://github.com/ClementTurmel/galoppolag/commit/f51679a13122fa70fb486088c6c421a5a9891a64) and [130720](https://github.com/ClementTurmel/galoppolag/commit/1307209c3615d17e943800274aceb1acc42a0924))
 
 I start adding a way to see lessons, so I add `Lesson`, `Instructor` and `Couple` represented by a `Equine` and a `Person`
+
+Instructor and Rider class inherti from person, to avoid seing people who are not riders in lessons.
+
+I explore validation using method `clean` to be able to se ErrorValidation in default django administration pages when adding a couple in a lesson.
+
+
+##### [part 4: forms](https://docs.djangoproject.com/fr/5.0/intro/tutorial04/)

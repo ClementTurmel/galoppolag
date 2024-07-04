@@ -7,7 +7,8 @@ django.setup()
 #############################
 from datetime import datetime
 from zoneinfo import ZoneInfo
-from equines.models import Equine, Person, Rider, Lesson, Instructor
+from datetime import timedelta
+from equines.models import Equine, Person, Rider, Lesson, Instructor, Couple
 
 
 TEST_DATETIME = datetime.now(ZoneInfo("Europe/Paris"))
@@ -26,12 +27,25 @@ def test_import_persons():
 
     create_lessons()
 
+    bind_riders_to_lessons()
 
+
+def bind_riders_to_lessons():
+    for lesson in Lesson.objects.all():
+        for rider in Rider.objects.all()[:5]:
+            Couple.objects.create(
+                rider=rider,
+                equine=Equine.objects.first(),
+                lesson=lesson
+            )
 
 
 def create_lessons():
-    Lesson.objects.create(instructor=Instructor.objects.first(), datetime=TEST_DATETIME)
-
+    for i in range(1, 6):
+        Lesson.objects.create(
+            instructor=Instructor.objects.first(),
+            datetime=TEST_DATETIME + timedelta(days=i)
+        )
 
 def create_instructors():
     Instructor.objects.create(first_name="Maria", last_name="Goode", birthday="1980-01-01")

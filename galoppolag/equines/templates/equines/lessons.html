@@ -1,0 +1,14 @@
+{% extends 'equines/base.html' %}
+
+{% block content %}
+<div>
+    <h2>Leçons :</h2>
+    <ul>
+        {% for lesson in lessons %}
+        <li>
+            <p>{{lesson.datetime|date:"l d F à H:i" }}, moniteur: {{ lesson.instructor }}, {{ lesson.couples.all|length }} inscrit(s) </p>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

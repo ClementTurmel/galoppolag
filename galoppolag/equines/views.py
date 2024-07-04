@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from equines.models import Person
+from equines.models import Person, Lesson
 from django.http import HttpResponse, Http404
 from django.template import loader
 
@@ -19,3 +19,8 @@ def equine_detail(request, equine_id):
 def owner_detail(request, equine_id):
     person = get_object_or_404(Person, pk=equine_id)
     return render(request, "equines/person.html", {"person": person})
+
+
+def lessons(request):
+    lessons = Lesson.objects.all()
+    return render(request, "equines/lessons.html", {"lessons": lessons})
