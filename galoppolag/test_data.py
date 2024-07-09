@@ -49,6 +49,7 @@ def create_lessons():
 
 def create_instructors():
     Instructor.objects.create(first_name="Maria", last_name="Goode", birthday="1980-01-01")
+    Instructor.objects.create(first_name="Eva", last_name="Mayer", birthday="1981-02-02")
 
 
 def create_riders():
