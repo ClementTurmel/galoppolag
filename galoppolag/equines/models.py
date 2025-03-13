@@ -15,6 +15,8 @@ class Person(models.Model):
     
     def get_owned_horses_names(self) -> str:
         horses = self.owned_horses.all()
+        if len(horses) == 0:
+            return ""
         if len(horses) > 1:
             return ", ".join([equine.name for equine in horses[:len(horses)-1]]) + " et " + horses[len(horses)-1].name
         else:
@@ -51,20 +53,19 @@ class Lesson(models.Model):
     datetime = models.DateTimeField()
 
 
-class Couple(models.Model):
+class LessonParticipant(models.Model):
     rider = models.ForeignKey(Rider, on_delete=models.CASCADE)
     equine = models.ForeignKey(Equine, on_delete=models.SET_NULL, null=True, blank=True)
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name="couples")
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name="participants")
 
     def __str__(self) -> str:
         return f"{self.rider.first_name} {self.rider.last_name} " \
             f"et {self.equine.name} "\
-            f"dans le cours du {formats.date_format(self.lesson.datetime, "l d F à H:i")} "\
+            f"dans le cours du {formats.date_format(self.lesson.datetime, 'l d F à H:i')} "\
             f"avec {self.lesson.instructor.first_name} {self.lesson.instructor.last_name}"
 
-
     def clean(self):
-        lesson_riders = [couple.rider for couple in self.lesson.couples.all()]
+        lesson_riders = [participant.rider for participant in self.lesson.participants.all()]
         if self.rider in lesson_riders:
             raise ValidationError(f"Rider {self.rider.first_name} {self.rider.last_name} is already in this lesson")
 

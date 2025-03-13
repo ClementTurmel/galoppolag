@@ -4,38 +4,9 @@
     {% if oldest_persons %}
         <ul class="list-group mx-3">
         {% for person in oldest_persons %}
-            <li class="list-group-item">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center">
-                        {% if person.picture_url %}
-                            <div><img src="{{ person.picture_url }}" alt="{{ person.first_name }} {{ person.last_name }}" class="rounded-circle me-2" style="width: 40px; height: 40px;"></div>
-                        {% else %}
-                            <div 
-                                class="rounded-circle bg-info text-white me-2 d-flex align-items-center justify-content-center" 
-                                style="width: 40px; height: 40px;">
-                                {{ person.first_name|first|upper }} {{ person.last_name|first|upper }}
-                            </div>
-                        {% endif %}
-                        <div flex-column ><a href="{% url 'owner_detail' person.id %}" class="text-decoration-none text-dark">{{ person.first_name }} {{ person.last_name }}</a></div>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        {% if person.owned_horses.all %}
-                            propriétaire de {{ person.get_owned_horses_names }}
-                            {% for horse in person.owned_horses.all %}
-                                {% if horse.picture_url %}
-                                    <img src="{{ horse.picture_url }}" alt="{{ horse.name }}" class="rounded-circle ms-2" style="width: 40px; height: 40px;">
-                                {% else %}
-                                    <div 
-                                        class="rounded-circle bg-info text-white ms-2 d-flex align-items-center justify-content-center" 
-                                        style="width: 40px; height: 40px;">
-                                        {{ horse.name|first|upper }}
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
-            </li>
+            {% with person=person horses=person.owned_horses.all description=person.get_owned_horses_names %}
+                {% include "equines/partials/person_horse_item.html" %}
+            {% endwith %}
         {% endfor %}
         </ul>
     {% else %}

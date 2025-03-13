@@ -1,53 +1,24 @@
 {% extends 'equines/base.html' %}
+{% load custom_filters %}
 
 {% block content %}
 
     <h3>Modifier une leçon :</h3>
     <p>{{lesson.datetime|date:"l d F à H:i" }}</p>
     <p>moniteur: {{ lesson.instructor }}</p>
-    <p>{{ lesson.couples.all|length }} inscrit(s) :</p>
+    <p>{{ lesson.participants.all|length }} inscrit(s) :</p>
     
     <ul class="list-group mx-3">
-        {% for couple in lesson.couples.all %}
-        {% with person=couple.rider horse=couple.equine %}
-        <li class="list-group-item">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center">
-                    {% if person.picture_url %}
-                    <div><img src="{{ person.picture_url }}" alt="{{ person.first_name }} {{ person.last_name }}" class="rounded-circle me-2" style="width: 40px; height: 40px;"></div>
-                    {% else %}
-                    <div 
-                    class="rounded-circle bg-info text-white me-2 d-flex align-items-center justify-content-center" 
-                    style="width: 40px; height: 40px;">
-                    {{ person.first_name|first|upper }} {{ person.last_name|first|upper }}
-                    </div>
-                    {% endif %}
-                    <div flex-column ><a href="{% url 'owner_detail' person.id %}" class="text-decoration-none text-dark">{{ person.first_name }} {{ person.last_name }}</a></div>
-                </div>
-                <div class="d-flex align-items-center">
-                    {{ horse.name }}
-                    {% if horse.picture_url %}
-                    <img src="{{ horse.picture_url }}" alt="{{ horse.name }}" class="rounded-circle ms-2" style="width: 40px; height: 40px;">
-                    {% else %}
-                    <div 
-                        class="rounded-circle bg-info text-white ms-2 d-flex align-items-center justify-content-center" 
-                        style="width: 40px; height: 40px;">
-                        {{ horse.name|first|upper }}
-                    </div>
-                    {% endif %}
-                    <form action="{% url 'delete_couple' couple.id %}" method="post">
-                        {% csrf_token %}
-                        <input type="submit" class="btn btn-outline-danger btn-sm" value="Supprimer">
-                    </form>
-                </div>
-            </div>
-        </li>
-        {% endwith %}
+        
+        {% for participant in lesson.participants.all %}
+            {% with person=participant.rider horses=participant.equine|to_list description=participant.equine.name participant_id=participant.id %}
+                {% include "equines/partials/person_horse_item.html" %}
+            {% endwith %}
         {% endfor %}
     </ul>
     
     Inscrire un cavalier et un cheval :
-    <form action="{% url 'add_couple' lesson.id %}" method="post">
+    <form action="{% url 'add_participant' lesson.id %}" method="post">
         {% csrf_token %}
         {% for message in messages %}
         <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>

@@ -6,7 +6,7 @@
     <ul>
         {% for lesson in lessons %}
         <li>
-            <p><a href="{% url 'lesson' lesson.id %}">{{lesson.datetime|date:"l d F à H:i" }}</a>, moniteur: {{ lesson.instructor }}, {{ lesson.couples.all|length }} inscrit(s) </p>
+            <p><a href="{% url 'lesson' lesson.id %}">{{lesson.datetime|date:"l d F à H:i" }}</a>, moniteur: {{ lesson.instructor }}, {{ lesson.participants.all|length }} inscrit(s) </p>
            
         </li>
         {% endfor %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from equines.models import Person, Lesson, Couple, Rider, Equine
+from equines.models import Person, Lesson, LessonParticipant, Rider, Equine
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
@@ -41,17 +41,17 @@ def lesson(request, lesson_id):
 
     return render(request, "equines/lesson.html", context)
 
-def delete_couple(request, couple_id):
-    couple = get_object_or_404(Couple, pk=couple_id)
-    couple.delete()
-    return HttpResponseRedirect(reverse("lesson", args=(couple.lesson.id,)))
+def delete_participant(request, participant_id):
+    participant = get_object_or_404(LessonParticipant, pk=participant_id)
+    participant.delete()
+    return HttpResponseRedirect(reverse("lesson", args=(participant.lesson.id,)))
 
-def add_couple(request, lesson_id):
+def add_participant(request, lesson_id):
     lesson = get_object_or_404(Lesson, pk=lesson_id)
     rider_id = request.POST["rider"]
     equine_id = request.POST["equine"]
     try:
-        Couple.objects.create(
+        LessonParticipant.objects.create(
             rider=Rider.objects.get(pk=rider_id),
             equine=Equine.objects.get(pk=equine_id),
             lesson=lesson

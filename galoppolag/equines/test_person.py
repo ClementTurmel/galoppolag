@@ -60,6 +60,10 @@ class OwnedHorsesNames(TestCase):
         Equine.objects.create(name="Galopin", birthdate="2012-01-01", owner=person)
 
         assert person.get_owned_horses_names() == "Eclair, Tonnerre et Galopin"
+
+    def test_get_owned_horses_names_with_a_person_without_horses_should_return_empty_string(self):
+        person = Person.objects.first()
+        assert person.get_owned_horses_names() == ""
     
 ########### tools ##########
 
