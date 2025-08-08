@@ -30,13 +30,13 @@ def lessons(request):
 
 def lesson(request, lesson_id):
     lesson = get_object_or_404(Lesson, pk=lesson_id)
-    riders = Rider.objects.all()
-    equines = Equine.objects.all()
+    riders_not_in_lesson = Rider.objects.exclude(lessonparticipant__lesson=lesson)
+    equines_not_in_lesson = Equine.objects.exclude(lessonparticipant__lesson=lesson)
 
     context = {
         "lesson": lesson, 
-        "riders": riders, 
-        "equines": equines
+        "riders": riders_not_in_lesson, 
+        "equines": equines_not_in_lesson
     }
 
     return render(request, "equines/lesson.html", context)
@@ -57,7 +57,7 @@ def add_participant(request, lesson_id):
             lesson=lesson
         )
     except ValidationError as e:
-        messages.error(request, e.message)
+        messages.error(request, str(e))
     
     # Always return an HttpResponseRedirect after successfully dealing
     # with POST data. This prevents data from being posted twice if a
